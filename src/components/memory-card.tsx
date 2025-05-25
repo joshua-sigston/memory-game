@@ -1,25 +1,27 @@
+import { decodeEntity } from "html-entities";
+
+type EmojiData = {
+  name: string;
+  category: string;
+  group: string;
+  htmlCode: string[];
+};
+
 interface Props {
   handleClick: () => void;
+  data: EmojiData[];
 }
 
-const MemoryCard = ({ handleClick }: Props) => {
-  const emojiArray = [
-    "🐶",
-    "🐷",
-    "🐙",
-    "🐛",
-    "🐵",
-    "🐶",
-    "🐷",
-    "🐙",
-    "🐛",
-    "🐵",
-  ];
+const MemoryCard = ({ handleClick, data }: Props) => {
+  console.log(data);
+  const emojiArray = data.map((item) => item.htmlCode[0]);
+
+  console.log(emojiArray);
 
   const emojiEl = emojiArray.map((emoji, index) => (
     <li key={index} className="card-item">
       <button className="btn btn--emoji" onClick={handleClick}>
-        {emoji}
+        {decodeEntity(emoji)}
       </button>
     </li>
   ));

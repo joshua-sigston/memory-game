@@ -2,9 +2,11 @@ import { useState } from "react";
 import "./App.css";
 import Form from "./components/form";
 import MemoryCard from "./components/memory-card";
+import { decodeEntity } from "html-entities";
 
 function App() {
   const [isGameOn, setIsGameOn] = useState(false);
+  const [emojisData, setEmojisData] = useState([]);
 
   async function startGame(e: React.FormEvent<HTMLButtonElement>) {
     e.preventDefault();
@@ -18,7 +20,8 @@ function App() {
       }
 
       const data = await resp.json();
-      console.log(data);
+      const dataSample = data.slice(0, 5);
+      setEmojisData(dataSample);
     } catch (error) {
       console.error(error);
     }
@@ -28,12 +31,12 @@ function App() {
   function turnCard() {
     console.log("Memory card clicked");
   }
-
+  // console.log(emojisData);
   return (
     <main>
       <h1>Memory</h1>
       {!isGameOn && <Form handleSubmit={startGame} />}
-      {isGameOn && <MemoryCard handleClick={turnCard} />}
+      {isGameOn && <MemoryCard handleClick={turnCard} data={emojisData} />}
     </main>
   );
 }
