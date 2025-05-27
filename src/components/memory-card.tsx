@@ -13,10 +13,9 @@ interface Props {
 }
 
 const MemoryCard = ({ handleClick, data }: Props) => {
-  console.log(data);
   const emojiArray = data.map((item) => item.htmlCode[0]);
 
-  console.log(emojiArray);
+  // console.log(emojiArray);
 
   const emojiEl = emojiArray.map((emoji, index) => (
     <li key={index} className="card-item">

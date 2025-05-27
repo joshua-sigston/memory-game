@@ -1,12 +1,22 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import "./App.css";
 import Form from "./components/form";
 import MemoryCard from "./components/memory-card";
-import { decodeEntity } from "html-entities";
+import getRandomNumber from "./helpers/random-number";
+
+type EmojiData = {
+  name: string;
+  category: string;
+  group: string;
+  htmlCode: string[];
+  unicode: string[];
+};
 
 function App() {
   const [isGameOn, setIsGameOn] = useState(false);
-  const [emojisData, setEmojisData] = useState([]);
+  const [emojisData, setEmojisData] = useState<EmojiData[]>([]);
+
+  const indexNumbers = useMemo(() => getRandomNumber(), []);
 
   async function startGame(e: React.FormEvent<HTMLButtonElement>) {
     e.preventDefault();
@@ -20,8 +30,14 @@ function App() {
       }
 
       const data = await resp.json();
-      const dataSample = data.slice(0, 5);
-      setEmojisData(dataSample);
+      const dataSample = data.slice(0, 21);
+
+      const filteredData = dataSample.filter((_: EmojiData, i: number) =>
+        indexNumbers.includes(i)
+      );
+
+      setEmojisData(filteredData);
+      setIsGameOn(true);
     } catch (error) {
       console.error(error);
     }
@@ -31,7 +47,8 @@ function App() {
   function turnCard() {
     console.log("Memory card clicked");
   }
-  // console.log(emojisData);
+
+  console.log(emojisData);
   return (
     <main>
       <h1>Memory</h1>
