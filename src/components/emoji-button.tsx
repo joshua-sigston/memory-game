@@ -6,14 +6,14 @@ type SelectedCard = {
 interface Props {
   content: string;
   style: string;
-  onClick: () => void;
+  handleClick: () => void;
   selectedCardEntry?: SelectedCard;
   matchedCardEntry?: SelectedCard;
 }
 
 const EmojiButton = ({
   content,
-  onClick,
+  handleClick,
   selectedCardEntry,
   matchedCardEntry,
 }: Props) => {
@@ -24,7 +24,11 @@ const EmojiButton = ({
     ? "btn--emoji__back--selected"
     : "btn--emoji__front";
   return (
-    <button className={`btn btn--emoji ${btnStyle}`} onClick={onClick}>
+    <button
+      className={`btn btn--emoji ${btnStyle}`}
+      onClick={selectedCardEntry ? () => {} : handleClick}
+      disabled={!!matchedCardEntry}
+    >
       {btnContent}
     </button>
   );
