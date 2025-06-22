@@ -1,11 +1,22 @@
-// const randomNumber: number = Math.floor(Math.random() * 20) + 1;
+type EmojiData = {
+  name: string;
+  category: string;
+  group: string;
+  htmlCode: string[];
+  unicode: string[];
+};
 
-export default function getRandomNumber() {
-  const num1 = Math.floor(Math.random() * 20) + 1;
-  const num2 = Math.floor(Math.random() * 20) + 1;
-  const num3 = Math.floor(Math.random() * 20) + 1;
-  const num4 = Math.floor(Math.random() * 20) + 1;
-  const num5 = Math.floor(Math.random() * 20) + 1;
+// funciton that creates an array of random numbers that start at 1 and end at the length of the array
+export default function getRandomIndices(data: EmojiData[]) {
+  const randomIndicesArray: number[] = [];
+  for (let index = 0; index < 5; index++) {
+    const rand = Math.floor(Math.random() * data.length) + 1;
+    if (!randomIndicesArray.includes(rand)) {
+      randomIndicesArray.push(rand);
+    } else {
+      index--;
+    }
+  }
 
-  return [num1, num2, num3, num4, num5];
+  return randomIndicesArray;
 }
